@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2019-4-14.
+-->
+<mapper namespace="springboot.hello.dao.BsTagDao">
+    <resultMap id="bsTag" type="springboot.hello.entity.BsTag">
+            <result property="id" column="id"/>
+            <result property="tagname" column="tagname"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`tagname`
+    </sql>
+
+    <insert id="insert">
+        insert into `bs_tag`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tagname != null">
+                `tagname`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tagname != null">
+            #{tagname} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `bs_tag`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="tagname != null">
+                and `tagname` = #{tagname}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `bs_tag`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `bs_tag`
+        <set>
+                <if test="tagname != null">
+                    `tagname` = #{tagname},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="bsTag">
+        select
+        <include refid="columns" />
+        from `bs_tag`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="bsTag">
+        select
+        <include refid="columns" />
+        from `bs_tag`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="tagname != null">
+                and `tagname` = #{tagname}
+            </if>
+        </trim>
+    </select>
+</mapper>

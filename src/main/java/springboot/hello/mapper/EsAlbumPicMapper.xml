@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2018-12-27.
+-->
+<mapper namespace="springboot.hello.dao.EsAlbumPicDao">
+    <resultMap id="esAlbumPic" type="springboot.hello.entity.EsAlbumPic">
+            <id property="albumPicId" column="album_pic_id"/>
+            <result property="albumId" column="album_id"/>
+            <result property="albumPicUrl" column="album_pic_url"/>
+            <result property="albumPicDelFlag" column="album_pic_del_flag"/>
+            <result property="albumPicName" column="album_pic_name"/>
+            <result property="albumPicSize" column="album_pic_size"/>
+            <result property="albumWH" column="album_w_h"/>
+            <result property="picType" column="pic_type"/>
+            <result property="shopId" column="shop_id"/>
+            <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="columns">
+            `album_pic_id` ,`album_id` ,`album_pic_url` ,`album_pic_del_flag` ,`album_pic_name` ,`album_pic_size` ,`album_w_h` ,`pic_type` ,`shop_id` ,`create_time`
+    </sql>
+
+    <insert id="insert">
+    	<selectKey keyProperty="Id" resultType="string" order="BEFORE">    
+	            select uuid() as id from dual  
+	    </selectKey> 
+        insert into `es_album_pic`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="albumPicId != null">
+                `album_pic_id`,
+            </if>
+            <if test="albumId != null">
+                `album_id`,
+            </if>
+            <if test="albumPicUrl != null">
+                `album_pic_url`,
+            </if>
+            <if test="albumPicDelFlag != null">
+                `album_pic_del_flag`,
+            </if>
+            <if test="albumPicName != null">
+                `album_pic_name`,
+            </if>
+            <if test="albumPicSize != null">
+                `album_pic_size`,
+            </if>
+            <if test="albumWH != null">
+                `album_w_h`,
+            </if>
+            <if test="picType != null">
+                `pic_type`,
+            </if>
+            <if test="shopId != null">
+                `shop_id`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="albumPicId != null">
+            #{albumPicId} ,
+            </if>
+            <if test="albumId != null">
+            #{albumId} ,
+            </if>
+            <if test="albumPicUrl != null">
+            #{albumPicUrl} ,
+            </if>
+            <if test="albumPicDelFlag != null">
+            #{albumPicDelFlag} ,
+            </if>
+            <if test="albumPicName != null">
+            #{albumPicName} ,
+            </if>
+            <if test="albumPicSize != null">
+            #{albumPicSize} ,
+            </if>
+            <if test="albumWH != null">
+            #{albumWH} ,
+            </if>
+            <if test="picType != null">
+            #{picType} ,
+            </if>
+            <if test="shopId != null">
+            #{shopId} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `es_album_pic`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="albumPicId != null">
+                and `album_pic_id` = #{albumPicId}
+            </if>
+            <if test="albumId != null">
+                and `album_id` = #{albumId}
+            </if>
+            <if test="albumPicUrl != null">
+                and `album_pic_url` = #{albumPicUrl}
+            </if>
+            <if test="albumPicDelFlag != null">
+                and `album_pic_del_flag` = #{albumPicDelFlag}
+            </if>
+            <if test="albumPicName != null">
+                and `album_pic_name` = #{albumPicName}
+            </if>
+            <if test="albumPicSize != null">
+                and `album_pic_size` = #{albumPicSize}
+            </if>
+            <if test="albumWH != null">
+                and `album_w_h` = #{albumWH}
+            </if>
+            <if test="picType != null">
+                and `pic_type` = #{picType}
+            </if>
+            <if test="shopId != null">
+                and `shop_id` = #{shopId}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `es_album_pic`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `es_album_pic`
+        <set>
+                <if test="albumId != null">
+                    `album_id` = #{albumId},
+                </if>
+                <if test="albumPicUrl != null">
+                    `album_pic_url` = #{albumPicUrl},
+                </if>
+                <if test="albumPicDelFlag != null">
+                    `album_pic_del_flag` = #{albumPicDelFlag},
+                </if>
+                <if test="albumPicName != null">
+                    `album_pic_name` = #{albumPicName},
+                </if>
+                <if test="albumPicSize != null">
+                    `album_pic_size` = #{albumPicSize},
+                </if>
+                <if test="albumWH != null">
+                    `album_w_h` = #{albumWH},
+                </if>
+                <if test="picType != null">
+                    `pic_type` = #{picType},
+                </if>
+                <if test="shopId != null">
+                    `shop_id` = #{shopId},
+                </if>
+                <if test="createTime != null">
+                    `create_time` = #{createTime},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="esAlbumPic">
+        select
+        <include refid="columns" />
+        from `es_album_pic`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="esAlbumPic">
+        select
+        <include refid="columns" />
+        from `es_album_pic`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="albumPicId != null">
+                and `album_pic_id` = #{albumPicId}
+            </if>
+            <if test="albumId != null">
+                and `album_id` = #{albumId}
+            </if>
+            <if test="albumPicUrl != null">
+                and `album_pic_url` = #{albumPicUrl}
+            </if>
+            <if test="albumPicDelFlag != null">
+                and `album_pic_del_flag` = #{albumPicDelFlag}
+            </if>
+            <if test="albumPicName != null">
+                and `album_pic_name` = #{albumPicName}
+            </if>
+            <if test="albumPicSize != null">
+                and `album_pic_size` = #{albumPicSize}
+            </if>
+            <if test="albumWH != null">
+                and `album_w_h` = #{albumWH}
+            </if>
+            <if test="picType != null">
+                and `pic_type` = #{picType}
+            </if>
+            <if test="shopId != null">
+                and `shop_id` = #{shopId}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+        </trim>
+    </select>
+</mapper>

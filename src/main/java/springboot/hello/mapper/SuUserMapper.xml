@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2019-4-13.
+-->
+<mapper namespace="springboot.hello.dao.SuUserDao">
+    <resultMap id="suUser" type="springboot.hello.entity.SuUser">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="phoneNo" column="phone_no"/>
+            <result property="qq" column="qq"/>
+            <result property="registTime" column="regist_time"/>
+            <result property="level" column="level"/>
+            <result property="score" column="score"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`username` ,`password` ,`phone_no` ,`qq` ,`regist_time` ,`level` ,`score`
+    </sql>
+
+    <insert id="insert">
+        insert into `su_user`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                `username`,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="phoneNo != null">
+                `phone_no`,
+            </if>
+            <if test="qq != null">
+                `qq`,
+            </if>
+            <if test="registTime != null">
+                `regist_time`,
+            </if>
+            <if test="level != null">
+                `level`,
+            </if>
+            <if test="score != null">
+                `score`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+            #{username} ,
+            </if>
+            <if test="password != null">
+            #{password} ,
+            </if>
+            <if test="phoneNo != null">
+            #{phoneNo} ,
+            </if>
+            <if test="qq != null">
+            #{qq} ,
+            </if>
+            <if test="registTime != null">
+            #{registTime} ,
+            </if>
+            <if test="level != null">
+            #{level} ,
+            </if>
+            <if test="score != null">
+            #{score} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `su_user`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="username != null">
+                and `username` = #{username}
+            </if>
+            <if test="password != null">
+                and `password` = #{password}
+            </if>
+            <if test="phoneNo != null">
+                and `phone_no` = #{phoneNo}
+            </if>
+            <if test="qq != null">
+                and `qq` = #{qq}
+            </if>
+            <if test="registTime != null">
+                and `regist_time` = #{registTime}
+            </if>
+            <if test="level != null">
+                and `level` = #{level}
+            </if>
+            <if test="score != null">
+                and `score` = #{score}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `su_user`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `su_user`
+        <set>
+                <if test="username != null">
+                    `username` = #{username},
+                </if>
+                <if test="password != null">
+                    `password` = #{password},
+                </if>
+                <if test="phoneNo != null">
+                    `phone_no` = #{phoneNo},
+                </if>
+                <if test="qq != null">
+                    `qq` = #{qq},
+                </if>
+                <if test="registTime != null">
+                    `regist_time` = #{registTime},
+                </if>
+                <if test="level != null">
+                    `level` = #{level},
+                </if>
+                <if test="score != null">
+                    `score` = #{score},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="suUser">
+        select
+        <include refid="columns" />
+        from `su_user`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="suUser">
+        select
+        <include refid="columns" />
+        from `su_user`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="username != null">
+                and `username` = #{username}
+            </if>
+            <if test="password != null">
+                and `password` = #{password}
+            </if>
+            <if test="phoneNo != null">
+                and `phone_no` = #{phoneNo}
+            </if>
+            <if test="qq != null">
+                and `qq` = #{qq}
+            </if>
+            <if test="registTime != null">
+                and `regist_time` = #{registTime}
+            </if>
+            <if test="level != null">
+                and `level` = #{level}
+            </if>
+            <if test="score != null">
+                and `score` = #{score}
+            </if>
+        </trim>
+    </select>
+</mapper>

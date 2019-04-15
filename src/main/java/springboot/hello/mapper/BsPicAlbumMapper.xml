@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2019-4-13.
+-->
+<mapper namespace="springboot.hello.dao.BsPicAlbumDao">
+    <resultMap id="bsPicAlbum" type="springboot.hello.entity.BsPicAlbum">
+            <id property="id" column="id"/>
+            <result property="picId" column="pic_id"/>
+            <result property="albumId" column="album_id"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`pic_id` ,`album_id`
+    </sql>
+
+    <insert id="insert">
+        insert into `bs_pic_album`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="picId != null">
+                `pic_id`,
+            </if>
+            <if test="albumId != null">
+                `album_id`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="picId != null">
+            #{picId} ,
+            </if>
+            <if test="albumId != null">
+            #{albumId} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `bs_pic_album`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="picId != null">
+                and `pic_id` = #{picId}
+            </if>
+            <if test="albumId != null">
+                and `album_id` = #{albumId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `bs_pic_album`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `bs_pic_album`
+        <set>
+                <if test="picId != null">
+                    `pic_id` = #{picId},
+                </if>
+                <if test="albumId != null">
+                    `album_id` = #{albumId},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="bsPicAlbum">
+        select
+        <include refid="columns" />
+        from `bs_pic_album`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="bsPicAlbum">
+        select
+        <include refid="columns" />
+        from `bs_pic_album`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="picId != null">
+                and `pic_id` = #{picId}
+            </if>
+            <if test="albumId != null">
+                and `album_id` = #{albumId}
+            </if>
+        </trim>
+    </select>
+</mapper>

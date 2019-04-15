@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2019-4-13.
+-->
+<mapper namespace="springboot.hello.dao.BsPicsDao">
+    <resultMap id="bsPics" type="springboot.hello.entity.BsPics">
+            <id property="id" column="id"/>
+            <result property="albumId" column="album_id"/>
+            <result property="path" column="path"/>
+            <result property="isVip" column="is_vip"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`album_id` ,`path` ,`is_vip`
+    </sql>
+
+    <insert id="insert">
+        insert into `bs_pics`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="albumId != null">
+                `album_id`,
+            </if>
+            <if test="path != null">
+                `path`,
+            </if>
+            <if test="isVip != null">
+                `is_vip`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="albumId != null">
+            #{albumId} ,
+            </if>
+            <if test="path != null">
+            #{path} ,
+            </if>
+            <if test="isVip != null">
+            #{isVip} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `bs_pics`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="albumId != null">
+                and `album_id` = #{albumId}
+            </if>
+            <if test="path != null">
+                and `path` = #{path}
+            </if>
+            <if test="isVip != null">
+                and `is_vip` = #{isVip}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `bs_pics`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `bs_pics`
+        <set>
+                <if test="albumId != null">
+                    `album_id` = #{albumId},
+                </if>
+                <if test="path != null">
+                    `path` = #{path},
+                </if>
+                <if test="isVip != null">
+                    `is_vip` = #{isVip},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="bsPics">
+        select
+        <include refid="columns" />
+        from `bs_pics`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="bsPics">
+        select
+        <include refid="columns" />
+        from `bs_pics`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="albumId != null">
+                and `album_id` = #{albumId}
+            </if>
+            <if test="path != null">
+                and `path` = #{path}
+            </if>
+            <if test="isVip != null">
+                and `is_vip` = #{isVip}
+            </if>
+        </trim>
+    </select>
+</mapper>

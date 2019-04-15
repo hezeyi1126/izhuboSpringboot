@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2019-4-14.
+-->
+<mapper namespace="springboot.hello.dao.BsAlbumDao">
+    <resultMap id="bsAlbum" type="springboot.hello.entity.BsAlbum">
+            <id property="id" column="id"/>
+            <result property="albumName" column="album_name"/>
+            <result property="albumCoverId" column="album_cover_id"/>
+            <result property="uploadTime" column="upload_time"/>
+            <result property="useFlag" column="use_flag"/>
+            <result property="uploadUser" column="upload_user"/>
+            <result property="tagId" column="tag_id"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`album_name` ,`album_cover_id` ,`upload_time` ,`use_flag` ,`upload_user` ,`tag_id`
+    </sql>
+
+    <insert id="insert">
+        insert into `bs_album`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="albumName != null">
+                `album_name`,
+            </if>
+            <if test="albumCoverId != null">
+                `album_cover_id`,
+            </if>
+            <if test="uploadTime != null">
+                `upload_time`,
+            </if>
+            <if test="useFlag != null">
+                `use_flag`,
+            </if>
+            <if test="uploadUser != null">
+                `upload_user`,
+            </if>
+            <if test="tagId != null">
+                `tag_id`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="albumName != null">
+            #{albumName} ,
+            </if>
+            <if test="albumCoverId != null">
+            #{albumCoverId} ,
+            </if>
+            <if test="uploadTime != null">
+            #{uploadTime} ,
+            </if>
+            <if test="useFlag != null">
+            #{useFlag} ,
+            </if>
+            <if test="uploadUser != null">
+            #{uploadUser} ,
+            </if>
+            <if test="tagId != null">
+            #{tagId} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `bs_album`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="albumName != null">
+                and `album_name` = #{albumName}
+            </if>
+            <if test="albumCoverId != null">
+                and `album_cover_id` = #{albumCoverId}
+            </if>
+            <if test="uploadTime != null">
+                and `upload_time` = #{uploadTime}
+            </if>
+            <if test="useFlag != null">
+                and `use_flag` = #{useFlag}
+            </if>
+            <if test="uploadUser != null">
+                and `upload_user` = #{uploadUser}
+            </if>
+            <if test="tagId != null">
+                and `tag_id` = #{tagId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `bs_album`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `bs_album`
+        <set>
+                <if test="albumName != null">
+                    `album_name` = #{albumName},
+                </if>
+                <if test="albumCoverId != null">
+                    `album_cover_id` = #{albumCoverId},
+                </if>
+                <if test="uploadTime != null">
+                    `upload_time` = #{uploadTime},
+                </if>
+                <if test="useFlag != null">
+                    `use_flag` = #{useFlag},
+                </if>
+                <if test="uploadUser != null">
+                    `upload_user` = #{uploadUser},
+                </if>
+                <if test="tagId != null">
+                    `tag_id` = #{tagId},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="bsAlbum">
+        select
+        <include refid="columns" />
+        from `bs_album`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="bsAlbum">
+        select
+        <include refid="columns" />
+        from `bs_album`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="albumName != null">
+                and `album_name` = #{albumName}
+            </if>
+            <if test="albumCoverId != null">
+                and `album_cover_id` = #{albumCoverId}
+            </if>
+            <if test="uploadTime != null">
+                and `upload_time` = #{uploadTime}
+            </if>
+            <if test="useFlag != null">
+                and `use_flag` = #{useFlag}
+            </if>
+            <if test="uploadUser != null">
+                and `upload_user` = #{uploadUser}
+            </if>
+            <if test="tagId != null">
+                and `tag_id` = #{tagId}
+            </if>
+        </trim>
+    </select>
+</mapper>

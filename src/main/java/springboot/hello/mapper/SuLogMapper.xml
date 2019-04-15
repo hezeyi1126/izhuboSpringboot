@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!--
+* Created by hbm Generator<27683139@qq.com> on 2019-4-13.
+-->
+<mapper namespace="springboot.hello.dao.SuLogDao">
+    <resultMap id="suLog" type="springboot.hello.entity.SuLog">
+            <id property="id" column="id"/>
+            <result property="logType" column="log_type"/>
+            <result property="accessPath" column="access_path"/>
+            <result property="remoteIp" column="remote_ip"/>
+            <result property="createTime" column="create_time"/>
+            <result property="userId" column="user_id"/>
+    </resultMap>
+
+    <sql id="columns">
+            `id` ,`log_type` ,`access_path` ,`remote_ip` ,`create_time` ,`user_id`
+    </sql>
+
+    <insert id="insert">
+        insert into `su_log`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logType != null">
+                `log_type`,
+            </if>
+            <if test="accessPath != null">
+                `access_path`,
+            </if>
+            <if test="remoteIp != null">
+                `remote_ip`,
+            </if>
+            <if test="createTime != null">
+                `create_time`,
+            </if>
+            <if test="userId != null">
+                `user_id`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logType != null">
+            #{logType} ,
+            </if>
+            <if test="accessPath != null">
+            #{accessPath} ,
+            </if>
+            <if test="remoteIp != null">
+            #{remoteIp} ,
+            </if>
+            <if test="createTime != null">
+            #{createTime} ,
+            </if>
+            <if test="userId != null">
+            #{userId} ,
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from `su_log`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="logType != null">
+                and `log_type` = #{logType}
+            </if>
+            <if test="accessPath != null">
+                and `access_path` = #{accessPath}
+            </if>
+            <if test="remoteIp != null">
+                and `remote_ip` = #{remoteIp}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="userId != null">
+                and `user_id` = #{userId}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByIds">
+        delete from `su_log`
+        where `id` in
+        <foreach collection="ids" open="(" item="id" separator="," close=")">
+        #{id}
+        </foreach>
+    </delete>
+
+    <update id="update">
+        update `su_log`
+        <set>
+                <if test="logType != null">
+                    `log_type` = #{logType},
+                </if>
+                <if test="accessPath != null">
+                    `access_path` = #{accessPath},
+                </if>
+                <if test="remoteIp != null">
+                    `remote_ip` = #{remoteIp},
+                </if>
+                <if test="createTime != null">
+                    `create_time` = #{createTime},
+                </if>
+                <if test="userId != null">
+                    `user_id` = #{userId},
+                </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="suLog">
+        select
+        <include refid="columns" />
+        from `su_log`
+        where `id` = #{id}
+    </select>
+
+    <select id="list" resultMap="suLog">
+        select
+        <include refid="columns" />
+        from `su_log`
+        <trim prefix="where " prefixOverrides="and ">
+            <if test="id != null">
+                and `id` = #{id}
+            </if>
+            <if test="logType != null">
+                and `log_type` = #{logType}
+            </if>
+            <if test="accessPath != null">
+                and `access_path` = #{accessPath}
+            </if>
+            <if test="remoteIp != null">
+                and `remote_ip` = #{remoteIp}
+            </if>
+            <if test="createTime != null">
+                and `create_time` = #{createTime}
+            </if>
+            <if test="userId != null">
+                and `user_id` = #{userId}
+            </if>
+        </trim>
+    </select>
+</mapper>
