@@ -1,6 +1,7 @@
 package springboot.hello.filter;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -41,7 +42,18 @@ public class PageFilter implements Filter{
 			throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest)arg0;
 		HttpServletResponse reqponse = (HttpServletResponse)arg1;
-		
+//		Enumeration<String> headers = request.getHeaderNames();
+//		
+//		System.out.println(request.getHeader("X-Forwarded-For"));
+//		System.out.println(request.getHeader("X-Forwarded-Host"));
+//		System.out.println(request.getHeader("Host"));
+//		while(headers.hasMoreElements()){
+//			String ele = headers.nextElement();
+//			System.out.print(ele +"----------" + request.getHeader(ele));
+//			System.out.println();
+//		}
+//		
+//		
 //		System.out.println("arg0.getRemoteHost()-" +request.getRemoteHost());
 //		System.out.println("arg0.getRemoteAddr()-" +request.getRemoteAddr());
 //		System.out.println("arg0.getPathInfo()-" +request.getPathInfo());

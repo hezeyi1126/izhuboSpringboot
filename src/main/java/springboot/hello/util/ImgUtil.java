@@ -37,9 +37,39 @@ PS：经过使用后的反馈，这个工具无法正确压缩出png格式的图
 public class ImgUtil {
 	
 	public static void main(String[] args) throws IOException {
-		File f = new File("C:\\Users\\Administrator\\Pictures\\14029B1L1I10-15614.jpg");
-		Thumbnails.of(f)
-		.scale(1f).outputQuality(0.4f)
-		.toFile("C:\\Users\\Administrator\\Pictures\\aaa.jpg");
+		File f = new File("C:\\Users\\Administrator\\Pictures\\1f3b1e9e-cb45-46c8-bee5-d0fc82b9fbf4.jpg");
+		Thumbnails.of(f).size(300,500)
+		.outputQuality(0.1f)
+		.toFile("C:\\Users\\Administrator\\Pictures\\2f3b1e9e-cb45-46c8-bee5-d0fc82b9fbf4.jpg");
+		
+	}
+	
+	/**
+	 * 裁剪图片
+	 */
+	public static  void  cut(String filepath) {
+		try {
+			Thumbnails.of(filepath).size(300,500)
+			.outputQuality(0.1f)
+			.toFile(filepath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 裁剪图片
+	 */
+	public static  void  cut(File filepath) {
+		try {
+			Thumbnails.of(filepath).size(300,500)
+			.outputQuality(0.1f)
+			.toFile(filepath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

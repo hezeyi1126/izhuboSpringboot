@@ -6,6 +6,7 @@ import springboot.hello.service.BsPicAlbumService;
 import springboot.hello.service.BsPicsService;
 import springboot.hello.service.BsTagService;
 import springboot.hello.util.Dateutil;
+import springboot.hello.util.ImgUtil;
 import springboot.hello.util.LogUtil;
 import springboot.hello.controller.base.BaseController;
 import springboot.hello.entity.BsAlbum;
@@ -16,14 +17,18 @@ import springboot.hello.entity.SuUser;
 import springboot.hello.entity.TbUser;
 import springboot.hello.entity.response.ResponseEntity;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 
 /** 
@@ -31,6 +36,7 @@ import com.github.pagehelper.PageInfo;
 */
 @Controller
 @RequestMapping("/bsalbum")
+@ConfigurationProperties(prefix = "params")
 public class BsAlbumController extends BaseController{
 
     @Autowired
@@ -44,6 +50,19 @@ public class BsAlbumController extends BaseController{
     
     @Autowired
     BsTagService bsTagService;
+    
+  //文件上传路径
+  	private String uploadPath;
+  	
+  	
+  	public String getUploadPath() {
+  		return uploadPath;
+  	}
+
+
+  	public void setUploadPath(String uploadPath) {
+  		this.uploadPath = uploadPath;
+  	}
 
     @RequestMapping(value="",method = RequestMethod.GET)
     @ResponseBody
@@ -94,6 +113,10 @@ public class BsAlbumController extends BaseController{
     	bsAlbum.setUseFlag(0);
     	bsAlbum.setAlbumCoverId(Integer.parseInt(coverid));
     	bsAlbum.setUploadUser(getUser().getId());
+    	//裁剪fengmian
+    	String coverFile = uploadPath + bsPicsService.getById(coverid).getPath();
+    	ImgUtil.cut(coverFile);
+    	
     	
     	if(bsAlbumService.insert(bsAlbum) >0) {
     		bsAlbum.setUploadTime(null);

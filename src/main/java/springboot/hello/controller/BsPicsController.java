@@ -42,7 +42,7 @@ public class BsPicsController extends BaseController{
     	PageInfo<BsPics> pageInfo = new PageInfo<>(list);
     	
     	//log
-    	LogUtil.log("album",bsPics.getAlbumId() + "", request.getRemoteHost(), user == null ? 0 :user.getId() );
+    	LogUtil.log("album",bsPics.getAlbumId() + "", request.getHeader("X-Forwarded-For"), user == null ? 0 :user.getId() );
         return pageInfo;
     }
 

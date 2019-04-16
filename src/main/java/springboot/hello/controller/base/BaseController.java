@@ -49,11 +49,28 @@ public class BaseController {
 		return request.getSession().getAttribute("user") == null ? false : true;
 	}
 	
+	private String getExt(String name) {
+		if(name.indexOf(".jpg") > 0) {
+			return "image/jpeg";
+		}else if(name.indexOf(".png") > 0) {
+			return "image/png";
+		}
+		return "x";
+	}
+	
 	protected void write(String path) {
 		File f = new File(path);
+		
 		if(!f.exists()) {
 			return;
 		}
+		String fname = f.getName();
+		String contenttype = getExt(fname);
+		if(!contenttype.equals("x") ) {
+			response.setHeader( "Content-Type", contenttype );
+		}
+		
+		response.setHeader( "Content-Disposition", "attachment;filename=" + fname );
 		FileInputStream fis = null;
 		OutputStream os =   null;
 		try {
